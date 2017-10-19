@@ -3,24 +3,24 @@
  */
 import { createStore, applyMiddleware } from "redux";
 import createSagaMiddleware from "redux-saga";
-import reducer from "./reducers/";
 import rootSaga from "./sagas";
 
-import * as coreReducers from "./reducers/core";
+import { rootReducer } from "./reducers/";
+import coreActions from "./actions";
+import { assignAll } from 'redux-act';
 
 export const sagaMiddleware = createSagaMiddleware();
 const middlewares = [sagaMiddleware];
 
-if (process.env.NODE_ENV === "development") {
+/*if (process.env.NODE_ENV === "development") {*/
   const { logger } = require("redux-logger");
   middlewares.push(logger);
-}
+/*}*/
 
-export const registry = new Registry(coreReducers);
-
-const store = createStore(registry.getRootReducer(), {}, applyMiddleware(...middlewares));
-registry.store = store;
+const store = createStore(rootReducer, {}, applyMiddleware(...middlewares));
+assignAll(coreActions, store);
 
 sagaMiddleware.run(rootSaga);
 
 export default store;
+

@@ -2,13 +2,25 @@
  * Created by Пользователь on 10.10.2017.
  */
 import React, { Component } from 'react';
-import './home.scss'
-import './home.less'
+import './home.scss';
+import './home.less';
+import areasActions from "../../actions/areas";
+import store from '../../store';
 
 export default class Home extends Component {
-render() {
-    return (
-      <h1>Hello world!</h1>
-    );
-  };
+
+  constructor(props){
+    super(props);
+  }
+  componentDidMount(){
+    store.dispatch(areasActions.getArea(113));
+  }
+
+  render() {
+      return (
+        <h1>Hello world!</h1>
+      );
+    };
 };
+
+

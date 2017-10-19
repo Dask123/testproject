@@ -17,10 +17,15 @@
   "author": "Andrei Denisov <anddenisov@icloud.com> (https://github.com/Dask123)",
   "license": "ISC",
   "dependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "moment": "^2.19.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
+    "redux-act": "^1.4.1",
+    "redux-logger": "^3.0.6",
     "redux-saga": "^0.16.0"
   },
   "devDependencies": {
