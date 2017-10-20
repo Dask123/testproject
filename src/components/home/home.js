@@ -5,7 +5,6 @@ import React, { Component } from 'react';
 import './home.scss';
 import './home.less';
 import areasActions from "../../actions/areas";
-import store from '../../store';
 
 export default class Home extends Component {
 
@@ -13,7 +12,7 @@ export default class Home extends Component {
     super(props);
   }
   componentDidMount(){
-    store.dispatch(areasActions.getArea(113));
+    areasActions.getArea(113);
   }
 
   render() {
