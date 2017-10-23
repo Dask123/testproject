@@ -4,9 +4,15 @@
 
 import { all } from "redux-saga/effects";
 import * as areasSagas from './areas';
+import * as mainDataSagas from './mainData';
+import * as vacancySagas from './vacancy'
 
 export default function* rootSaga() {
   yield all([
-    areasSagas.watchGetAreas(),
+    areasSagas.watchGetCountries(),
+    areasSagas.watchGetByCountryHandler(),
+    mainDataSagas.watchGetMainData(),
+    mainDataSagas.watchGetFilteredData(),
+    vacancySagas.watchGetVacancy()
   ]);
 }

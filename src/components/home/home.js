@@ -2,31 +2,39 @@
  * Created by Пользователь on 10.10.2017.
  */
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import moment from 'moment';
 import './home.scss';
 import './home.less';
+import mainDataActions from "../../actions/mainData";
 import areasActions from "../../actions/areas";
-import {connect} from 'react-redux';
+
+
+const dateTimeFormat = 'YYYY-MM-DD';
 
 class Home extends Component {
 
   constructor(props){
     super(props);
   }
+
   componentDidMount(){
-    areasActions.getArea(113);
+    mainDataActions.getMainData(moment().format(dateTimeFormat));
+    areasActions.getCountries();
+    areasActions.getByCountry(113);
   }
 
   render() {
-    console.log('PROPS',this.props)
       return (
         <h1>Hello world!</h1>
       );
     };
-};
+}
 
 function mapStateToProps(state) {
   return {
-    test: state.areasReducer
+    mainData: state.mainDataReducer,
+    areas: state.areasReducer
   };
 }
 

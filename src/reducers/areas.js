@@ -6,10 +6,18 @@ import areasActions from '../actions/areas';
 
 const initialState = {};
 export const areasReducer = createReducer({
-  [areasActions.getAreaSucceeded]: (state, payload) => {
+  [areasActions.getCountriesSucceeded]: (state, payload) => {
     return {...state, areas: payload}
   },
-  [areasActions.getAreaFailed]: (state, reason) => {
+  [areasActions.getCountriesFailed]: (state, reason) => {
     console.log(reason);
     return {...state}
-  }}, initialState);
+  },
+  [areasActions.getByCountrySucceeded]: (state, payload) => {
+    return {...state, areas: payload}
+  },
+  [areasActions.getByCountryFailed]: (state, reason) => {
+    console.log(reason);
+    return {...state}
+  },
+}, initialState);

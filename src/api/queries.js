@@ -13,7 +13,7 @@ export function getMainData(curDate) {
 }
 
 export function getAreas(area) {
-  return api.http.get(`${headHunter}areas/${area}`);
+  return api.http.get(`${headHunter}areas/${area?area:''}`);
 }
 
 export function getFilteredDataByCity(id) {
@@ -22,4 +22,8 @@ export function getFilteredDataByCity(id) {
       area: id
     }
   });
+}
+
+export function getVacancy(id) {
+  return api.http.get(`${headHunter}vacancies/${id}`);
 }
