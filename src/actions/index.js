@@ -8,4 +8,5 @@ import vacancyActions from './vacancy';
 let coreActions = {};
 coreActions = {...coreActions, ...areasActions, ...mainDataActions, ...vacancyActions};
 
+
 export default coreActions;

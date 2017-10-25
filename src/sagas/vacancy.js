@@ -3,16 +3,16 @@
  */
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getVacancy } from "../api/queries";
-import vacancyActions from "../actions/vacancy";
+import {vacancyActions, vacancyActionsHandlers} from "../actions/vacancy";
 
 function* getVacancyHandler(action) {
   try {
     const response = yield call(getVacancy, action.payload);
-    yield put(vacancyActions.getVacancySucceeded(response.data));
+    yield put(vacancyActionsHandlers.getVacancySucceeded(response.data));
   } catch (e) {
-    yield put(vacancyActions.getVacancyFailed(e.message));
+    yield put(vacancyActionsHandlers.getVacancyFailed(e.message));
   }
 }
 export function* watchGetVacancy() {
-  yield takeLatest(vacancyActions.getCountries, getVacancyHandler);
+  yield takeLatest(vacancyActions.getVacancy, getVacancyHandler);
 }

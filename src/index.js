@@ -8,8 +8,10 @@ import Home from './components/home/home';
 import store from "./store";
 
 const app = document.getElementById("app");
+console.log(store.getState())
 
 ReactDOM.render(
       <Provider store={store}>
         <Home/>
-      </Provider>, app);
+      </Provider>, app
+);

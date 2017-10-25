@@ -3,14 +3,14 @@
  */
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getMainData, getFilteredDataByCity } from "../api/queries";
-import mainDataActions from "../actions/mainData";
+import {mainDataActions, mainDataActionsHandlers} from "../actions/mainData";
 
 function* getMainDataHandler(action) {
   try {
     const response = yield call(getMainData, action.payload);
-    yield put(mainDataActions.getMainDataSucceeded(response.data.items));
+    yield put(mainDataActionsHandlers.getMainDataSucceeded(response.data.items));
   } catch (e) {
-    yield put(mainDataActions.getMainDataFailed(e.message));
+    yield put(mainDataActionsHandlers.getMainDataFailed(e.message));
   }
 }
 export function* watchGetMainData() {
@@ -20,9 +20,9 @@ export function* watchGetMainData() {
 function* getFilteredDataHandler(action) {
   try {
     const response = yield call(getFilteredDataByCity, action.payload);
-    yield put(mainDataActions.getFilteredDataSucceeded(response.data.items));
+    yield put(mainDataActionsHandlers.getFilteredDataSucceeded(response.data.items));
   } catch (e) {
-    yield put(mainDataActions.getFilteredDataFailed(e.message));
+    yield put(mainDataActionsHandlers.getFilteredDataFailed(e.message));
   }
 }
 export function* watchGetFilteredData() {
