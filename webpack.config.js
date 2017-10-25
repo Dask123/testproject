@@ -23,7 +23,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify("production")
+        NODE_ENV: JSON.stringify("development")
       }
     }),
     new webpack.HotModuleReplacementPlugin(),
@@ -40,13 +40,6 @@ module.exports = {
     ],
     rules: [
       {
-        test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader']
-        })
-      },
-      {
         test: /\.less$/,
         use: [{
           loader: "style-loader"
@@ -55,6 +48,10 @@ module.exports = {
         },{
           loader: "less-loader"
         }]
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader','css-loader']
       }
       ,
       {
