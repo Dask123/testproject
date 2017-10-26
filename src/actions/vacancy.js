@@ -5,6 +5,7 @@ import { createAction } from 'redux-act';
 
 export const vacancyActions = {
   getVacancy: createAction('get vacancy'),
+  clearVacancy: createAction('clear vacancy')
 };
 
 export const vacancyActionsHandlers = {

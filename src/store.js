@@ -17,6 +17,7 @@ const middlewares = [sagaMiddleware];
 /*}*/
 
 const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(...middlewares)));
+console.log(store.getState())
 assignAll(coreActions, store);
 
 sagaMiddleware.run(rootSaga);

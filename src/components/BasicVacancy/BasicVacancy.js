@@ -1,15 +1,13 @@
 /**
  * Created by Пользователь on 25.10.2017.
  */
-import React, { Component } from 'react';
+import React from 'react';
 import { Card } from "antd"
 import './BasicVacancy.less';
 
-export default class BasicVacancy extends Component{
-  render(){
-    const {vacancy} = this.props;
+export const BasicVacancy = ({vacancy, showDetailed}) => {
     return (
-        <Card title={vacancy.name}>
+        <Card title={vacancy.name} extra={<a onClick={()=>{showDetailed(vacancy.id)}}>Подробнее</a>}>
           <div className="vacancy-wrapper">
             <label>Требования: </label>
             <span className="vacancy-requirment">{vacancy.snippet.requirement}</span>
@@ -26,5 +24,5 @@ export default class BasicVacancy extends Component{
           </div>
         </Card>
     )
-  }
 };
+export default BasicVacancy;
