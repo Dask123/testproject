@@ -7,16 +7,25 @@ import {areasActionsHandlers} from '../actions/areas';
 const initialState = {};
 export const areasReducer = createReducer({
   [areasActionsHandlers.getCountriesSucceeded]: (state, payload) => {
-    return {...state, areas: payload}
+    return {...state, countries: payload}
   },
   [areasActionsHandlers.getCountriesFailed]: (state, reason) => {
     console.log(reason);
     return {...state}
   },
-  [areasActionsHandlers.getByCountrySucceeded]: (state, payload) => {
-    return {...state, areas: payload}
+  [areasActionsHandlers.getByAreaSucceeded]: (state, payload) => {
+    const zones = [];
+    const cities = [];
+    payload.forEach(zone=>{
+      if(zone.areas.length){
+        zones.push(zone);
+      }else{
+        cities.push(zone);
+      }
+    });
+    return {...state, zones, cities}
   },
-  [areasActionsHandlers.getByCountryFailed]: (state, reason) => {
+  [areasActionsHandlers.getByAreaFailed]: (state, reason) => {
     console.log(reason);
     return {...state}
   },

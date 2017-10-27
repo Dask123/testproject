@@ -20,11 +20,11 @@ export function* watchGetCountries() {
 function* getByCountryHandler(action) {
   try {
     const response = yield call(getAreas, action.payload);
-    yield put(areasActionsHandlers.getByCountrySucceeded(response.data.areas));
+    yield put(areasActionsHandlers.getByAreaSucceeded(response.data.areas));
   } catch (e) {
-    yield put(areasActionsHandlers.getByCountryFailed(e.message));
+    yield put(areasActionsHandlers.getByAreaFailed(e.message));
 }
 }
 export function* watchGetByCountryHandler() {
-  yield takeLatest(areasActions.getByCountry, getByCountryHandler);
+  yield takeLatest(areasActions.getByArea, getByCountryHandler);
 }
