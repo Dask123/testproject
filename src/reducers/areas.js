@@ -5,36 +5,47 @@ import { createReducer } from 'redux-act';
 import {areasActionsHandlers} from '../actions/areas';
 
 const initialState = {
-  areas: {}
+  areas: {
+      countries: [],
+      zones: [],
+      cities: []
+  }
 };
 let nextState;
 export const areasReducer = createReducer({
-  [areasActionsHandlers.getCountriesSucceeded]: (state, payload) => {
+  [areasActionsHandlers.getByIdSucceeded]: (state, payload) => {
+    let { countries, zones, cities} = state.areas;
+    if(Array.isArray(payload)){
+        payload.forEach(item=>{
+            if(!item.parent_id){
+                countries.push(item)
+            }
+        });
+    }else if(Array.isArray(Object.keys(payload)) && payload.areas.length){
+        cities = [];
+        zones = [];
+        payload.areas.forEach(item=>{
+            if(item.parent_id && item.areas.length){
+                zones.push(item);
+            }else if(!item.areas.length){
+                cities.push(item);
+            }
+        })
+        if(payload.areas.some(area=>area.areas.length) && zones.length){
+            cities = [];
+        }else if(!zones.length && !cities.length){
+            zones = state.areas.zones
+        }else if(!payload.areas.some(area=>area.areas.length)){
+            zones = state.areas.zones
+        }else if(payload.areas.some(area=>area.areas.length) && payload.areas.some(area=>!area.areas.length)){
+
+        }
+    }
     nextState = {...state};
-    nextState.areas = {
-      countries: payload
-    };
-    return nextState;
-  },
-  [areasActionsHandlers.getCountriesFailed]: (state, reason) => {
-    console.log(reason);
-    return {...state}
-  },
-  [areasActionsHandlers.getByAreaSucceeded]: (state, payload) => {
-    const zones = [];
-    const cities = [];
-    payload.forEach(zone=>{
-      if(zone.areas.length){
-        zones.push(zone);
-      }else{
-        cities.push(zone);
-      }
-    });
-    nextState = {...state};
-    nextState.areas = {...state.areas, zones, cities};
+    nextState.areas = {...state.areas, zones, cities, countries};
     return nextState
   },
-  [areasActionsHandlers.getByAreaFailed]: (state, reason) => {
+  [areasActionsHandlers.getByIdFailed]: (state, reason) => {
     console.log(reason);
     return {...state}
   },

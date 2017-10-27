@@ -22,7 +22,8 @@ class Home extends Component {
     super(props);
     this.state = {
       loading: true,
-      showFilterBlock: false
+      showFilterBlock: false,
+      kostil: true
     };
     this.showDetailed = this.showDetailed.bind(this);
     this.addFilter = this.addFilter.bind(this);
@@ -30,7 +31,7 @@ class Home extends Component {
 
   componentDidMount(){
     mainDataActions.getMainData(moment().format(dateTimeFormat));
-    areasActions.getCountries();
+    areasActions.getById();
   };
   componentWillReceiveProps(nextProps){
     if(Array.isArray(nextProps.mainData)){
@@ -46,6 +47,11 @@ class Home extends Component {
         okText: "Закрыть"
       })
     }
+    if(nextProps.areas.zones !== this.props.areas.zones || nextProps.areas.cities !== this.props.areas.cities){
+      this.setState({
+          kostil: !this.state.kostil
+      })
+    }
   };
 
   closeDetailed(){
@@ -56,12 +62,8 @@ class Home extends Component {
     vacancyActions.getVacancy(id);
   };
 
-  onCountryFilterChanged(country){
-    areasActions.getByArea(country);
-  };
-
   onAreaFilterChanged(area){
-    areasActions.getByArea(area);
+    areasActions.getById(area);
   };
 
   addFilter(){
@@ -74,7 +76,7 @@ class Home extends Component {
     const keys = Object.keys(areas);
     const items = keys.map(key=>Array.isArray(areas[key])?key:null);
     return keys.map(key=>{
-      if(items.includes(key) && areas[key]){
+      if(items.includes(key) && areas[key].length){
         return <Filter key={key} items={areas[key]} onFilterChange={this.onAreaFilterChanged} type={key}/>
       }
     })

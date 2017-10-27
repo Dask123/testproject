@@ -8,19 +8,34 @@ const dict = {
     cities:"город"
 };
 
-const Filter = ({ items, onFilterChange, type }) => {
-    return (
+export default class Filter extends Component{
+    constructor(props){
+        super(props)
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.items != this.props.items){
+            this.setState({test: true})
+        }
+    }
+
+    render(){
+     const {onFilterChange, items, type} = this.props;
+     return(
         <div className="filter">
             <Select
                 style={{width: '100%'}}
                 placeholder={`Выберите ${dict[type]}`}
                 onChange={onFilterChange}
+                allowClear={true}
             >
                 {
                     items.map(item => <Option key={item.id}>{item.name}</Option>)
                 }
             </Select>
         </div>
-    )
+     )
+    }
+
+
 };
-export default Filter;

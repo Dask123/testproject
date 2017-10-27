@@ -4,15 +4,12 @@
 import { createAction } from 'redux-act';
 
 export const areasActions = {
-  getCountries: createAction('get countries'),
-  getByArea: createAction('get by country')
+  getById: createAction('get area by id')
 };
 
 export const areasActionsHandlers = {
-  getCountriesSucceeded: createAction('successful countries response'),
-  getCountriesFailed: createAction('failed countries response'),
-  getByAreaSucceeded: createAction('successful by country response'),
-  getByAreaFailed: createAction('failed by country response'),
+  getByIdSucceeded: createAction('successful by id response'),
+  getByIdFailed: createAction('failed by id response'),
 };
 
 export default areasActions;

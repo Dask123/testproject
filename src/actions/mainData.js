@@ -4,8 +4,7 @@
 import { createAction } from 'redux-act';
 
 export const mainDataActions = {
-  getMainData: createAction('get main data'),
-  getFilteredData: createAction('get filtered data')
+  getMainData: createAction('get main data')
 };
 
 export const mainDataActionsHandlers = {
@@ -13,6 +12,7 @@ export const mainDataActionsHandlers = {
   getFilteredDataFailed: createAction('failed filtered response'),
   getMainDataSucceeded: createAction('successful response'),
   getMainDataFailed: createAction('failed response'),
+  getFilteredData: createAction('get filtered data')
 };
 
 export default mainDataActions;
