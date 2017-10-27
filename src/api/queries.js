@@ -16,7 +16,7 @@ export function getAreas(area) {
   return api.http.get(`${headHunter}areas/${area?area:''}`);
 }
 
-export function getFilteredDataByCity(id) {
+export function getFilteredDataById(id) {
   return api.http.get(`${headHunter}vacancies/`,{
     params: {
       area: id

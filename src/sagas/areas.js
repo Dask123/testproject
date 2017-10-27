@@ -4,6 +4,7 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getAreas } from "../api/queries";
 import {areasActions, areasActionsHandlers} from "../actions/areas";
+import {mainDataActions} from "../actions/mainData";
 
 function* getCountriesHandler(action) {
   try {
@@ -17,14 +18,15 @@ export function* watchGetCountries() {
   yield takeLatest(areasActions.getCountries, getCountriesHandler);
 }
 
-function* getByCountryHandler(action) {
+function* getByAreaHandler(action) {
   try {
     const response = yield call(getAreas, action.payload);
     yield put(areasActionsHandlers.getByAreaSucceeded(response.data.areas));
+    yield put(mainDataActions.getFilteredData(action.payload));
   } catch (e) {
     yield put(areasActionsHandlers.getByAreaFailed(e.message));
 }
 }
-export function* watchGetByCountryHandler() {
-  yield takeLatest(areasActions.getByArea, getByCountryHandler);
+export function* watchGetByAreaHandler() {
+  yield takeLatest(areasActions.getByArea, getByAreaHandler);
 }

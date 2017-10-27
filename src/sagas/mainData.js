@@ -2,7 +2,7 @@
  * Created by Пользователь on 22.10.2017.
  */
 import { call, put, takeLatest } from "redux-saga/effects";
-import { getMainData, getFilteredDataByCity } from "../api/queries";
+import { getMainData, getFilteredDataById } from "../api/queries";
 import {mainDataActions, mainDataActionsHandlers} from "../actions/mainData";
 
 function* getMainDataHandler(action) {
@@ -19,7 +19,7 @@ export function* watchGetMainData() {
 
 function* getFilteredDataHandler(action) {
   try {
-    const response = yield call(getFilteredDataByCity, action.payload);
+    const response = yield call(getFilteredDataById, action.payload);
     yield put(mainDataActionsHandlers.getFilteredDataSucceeded(response.data.items));
   } catch (e) {
     yield put(mainDataActionsHandlers.getFilteredDataFailed(e.message));

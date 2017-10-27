@@ -74,20 +74,15 @@ class Home extends Component {
     const keys = Object.keys(areas);
     const items = keys.map(key=>Array.isArray(areas[key])?key:null);
     return keys.map(key=>{
-      if(items.includes(key) && this.props[key]){
-        console.log(key, this.props[key].length);
-        return <Filter key={key} items={this.props[key]} onFilterChange={this.onAreaFilterChanged} type={key}/>
+      if(items.includes(key) && areas[key]){
+        return <Filter key={key} items={areas[key]} onFilterChange={this.onAreaFilterChanged} type={key}/>
       }
     })
   }
 
   renderData(){
-    const {mainData: vacancies, countries, zones, cities} = this.props;
+    const {mainData: vacancies, areas} = this.props;
     const {showFilterBlock} = this.state;
-    const areas = {
-      zones,
-      cities
-    };
     const filters = this.checkArea(areas);
 
     return (
@@ -102,7 +97,6 @@ class Home extends Component {
             {
               showFilterBlock &&
               <div className="filter-block">
-                <Filter items={countries?countries:[]} onFilterChange={this.onCountryFilterChanged} type={'country'}/>
                 {filters}
               </div>
             }
@@ -130,10 +124,8 @@ class Home extends Component {
 function mapStateToProps(state) {
   return {
     mainData: state.mainDataReducer.data,
-    countries: state.areasReducer.countries,
+    areas: state.areasReducer.areas,
     vacancy: state.vacancyReducer.data,
-    zones: state.areasReducer.zones,
-    cities: state.areasReducer.cities
   };
 }
 

@@ -4,10 +4,17 @@
 import { createReducer } from 'redux-act';
 import {areasActionsHandlers} from '../actions/areas';
 
-const initialState = {};
+const initialState = {
+  areas: {}
+};
+let nextState;
 export const areasReducer = createReducer({
   [areasActionsHandlers.getCountriesSucceeded]: (state, payload) => {
-    return {...state, countries: payload}
+    nextState = {...state};
+    nextState.areas = {
+      countries: payload
+    };
+    return nextState;
   },
   [areasActionsHandlers.getCountriesFailed]: (state, reason) => {
     console.log(reason);
@@ -23,7 +30,9 @@ export const areasReducer = createReducer({
         cities.push(zone);
       }
     });
-    return {...state, zones, cities}
+    nextState = {...state};
+    nextState.areas = {...state.areas, zones, cities};
+    return nextState
   },
   [areasActionsHandlers.getByAreaFailed]: (state, reason) => {
     console.log(reason);

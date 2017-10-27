@@ -10,7 +10,7 @@ import * as vacancySagas from './vacancy'
 export default function* rootSaga() {
   yield all([
     areasSagas.watchGetCountries(),
-    areasSagas.watchGetByCountryHandler(),
+    areasSagas.watchGetByAreaHandler(),
     mainDataSagas.watchGetMainData(),
     mainDataSagas.watchGetFilteredData(),
     vacancySagas.watchGetVacancy()
