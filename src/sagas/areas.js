@@ -4,16 +4,24 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import { getAreas } from "../api/queries";
 import {areasActions, areasActionsHandlers} from "../actions/areas";
-import {mainDataActions, mainDataActionsHandlers} from "../actions/mainData";
 
 function* getByIdHandler(action) {
   try {
+    const cities = [];
+    const zones = [];
     const response = yield call(getAreas, action.payload);
-    console.log(response)
-    yield put(areasActionsHandlers.getByIdSucceeded(response.data));
-    if(action.payload){
-      console.log(action.payload)
-        yield put(mainDataActionsHandlers.getFilteredData(action.payload));
+    if (Array.isArray(response.data)){
+      yield put(areasActionsHandlers.getCountriesSucceeded(response.data));
+    }else if(Array.isArray(response.data.areas)){
+      response.data.areas.forEach(area=>{
+        if(area.areas.length){
+          zones.push(area);
+        }else{
+          cities.push(area);
+        }
+      });
+      yield put(areasActionsHandlers.getCitiesSucceeded(cities));
+      yield put(areasActionsHandlers.getZonesSucceeded(zones));
     }
   } catch (e) {
     yield put(areasActionsHandlers.getByIdFailed(e.message));

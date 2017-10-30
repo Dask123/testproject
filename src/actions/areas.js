@@ -8,8 +8,10 @@ export const areasActions = {
 };
 
 export const areasActionsHandlers = {
-  getByIdSucceeded: createAction('successful by id response'),
-  getByIdFailed: createAction('failed by id response'),
+  getCountriesSucceeded: createAction('successful countries response'),
+  getByIdFailed: createAction('failed get by id response'),
+  getZonesSucceeded: createAction('successful zones response'),
+  getCitiesSucceeded: createAction('successful cities response')
 };
 
 export default areasActions;

@@ -1,41 +1,29 @@
+/**
+ * Created by Пользователь on 28.10.2017.
+ */
 import React, { Component } from 'react';
-import {Select} from 'antd';
+import {Select, Button} from 'antd';
 const Option = Select.Option;
 
 const dict = {
-    zones: "область",
-    countries: "страну",
-    cities:"город"
-};
+  countries: "страну",
+  zones: "область",
+  cities: "город"
+}
 
-export default class Filter extends Component{
-    constructor(props){
-        super(props)
-    }
-
-    componentWillReceiveProps(nextProps){
-        if(nextProps.items != this.props.items){
-            this.setState({test: true})
+const Filter = ({ items, onFilterChange, type }) => {
+  return (
+    <div className="filter">
+      <Select
+        style={{width: '100%'}}
+        placeholder={`Выберите ${dict[type]}`}
+        onChange={onFilterChange}
+      >
+        {
+          items.map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
         }
-    }
-
-    render(){
-     const {onFilterChange, items, type} = this.props;
-     return(
-        <div className="filter">
-            <Select
-                style={{width: '100%'}}
-                placeholder={`Выберите ${dict[type]}`}
-                onChange={onFilterChange}
-                allowClear={true}
-            >
-                {
-                    items.map(item => <Option key={item.id}>{item.name}</Option>)
-                }
-            </Select>
-        </div>
-     )
-    }
-
-
+      </Select>
+    </div>
+  )
 };
+export default Filter;

@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { Layout, Modal, Button } from 'antd';
+import { Layout, Modal, Button, Spin } from 'antd';
 import './home.less';
 import BasicVacancy from '../../components/BasicVacancy/BasicVacancy';
 import DetailedVacancy from '../../components/DetailedVacancy/DetailedVacancy';
@@ -21,40 +21,21 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      loading: true,
       showFilterBlock: false,
-      kostil: true
+      showModal: false
     };
+    this.renderData = this.renderData.bind(this);
     this.showDetailed = this.showDetailed.bind(this);
-    this.addFilter = this.addFilter.bind(this);
+    this.showFilters = this.showFilters.bind(this);
+    this.onFilterChange = this.onFilterChange.bind(this);
   }
 
-  componentDidMount(){
+  componentWillMount(){
     mainDataActions.getMainData(moment().format(dateTimeFormat));
     areasActions.getById();
-  };
-  componentWillReceiveProps(nextProps){
-    if(Array.isArray(nextProps.mainData)){
-      this.setState({
-        loading: false
-      })
-    }
-    if(nextProps.vacancy.name){
-      Modal.info({
-        title: nextProps.vacancy.name,
-        content: <DetailedVacancy vacancy={nextProps.vacancy}/>,
-        onOk: this.closeDetailed(),
-        okText: "Закрыть"
-      })
-    }
-    if(nextProps.areas.zones !== this.props.areas.zones || nextProps.areas.cities !== this.props.areas.cities){
-      this.setState({
-          kostil: !this.state.kostil
-      })
-    }
-  };
+  }
 
-  closeDetailed(){
+  closeModal(){
     vacancyActions.clearVacancy()
   };
 
@@ -62,44 +43,44 @@ class Home extends Component {
     vacancyActions.getVacancy(id);
   };
 
-  onAreaFilterChanged(area){
-    areasActions.getById(area);
-  };
-
-  addFilter(){
+  onFilterChange(id){
+    areasActions.getById(id);
     this.setState({
-      showFilterBlock: !this.state.showFilterBlock
+      filterId: id
+    });
+  };
+
+  showFilters(){
+    this.setState({
+      showFilters: !this.state.showFilters
     })
   };
 
-  checkArea(areas){
-    const keys = Object.keys(areas);
-    const items = keys.map(key=>Array.isArray(areas[key])?key:null);
-    return keys.map(key=>{
-      if(items.includes(key) && areas[key].length){
-        return <Filter key={key} items={areas[key]} onFilterChange={this.onAreaFilterChanged} type={key}/>
-      }
-    })
-  }
+  setFilter(){
+    mainDataActions.getFilteredData(this.state.id);
+  };
 
   renderData(){
-    const {mainData: vacancies, areas} = this.props;
-    const {showFilterBlock} = this.state;
-    const filters = this.checkArea(areas);
-
+    const {mainData: vacancies, areas, filters} = this.props;
+    let userFilters = Object.keys(areas).map(area=> {
+      if (filters.includes(area) && areas[area].length) {
+        return <Filter items={areas[area]} key={area} onFilterChange={this.onFilterChange} type={area}/>
+      }
+    });
     return (
       <Layout className="layout">
         <Header/>
         <Content style={{ padding: '0 50px' }}>
           <div className="filters-button">
-            <Button type="primary" onClick={this.addFilter}>
+            <Button type="primary" onClick={this.showFilters}>
               Фильтры
             </Button>
           </div>
             {
-              showFilterBlock &&
+              this.state.showFilters &&
               <div className="filter-block">
-                {filters}
+                {userFilters}
+                <Button type="primary" onClick={this.setFilter}>Применить</Button>
               </div>
             }
           <div className="data-wrapper">
@@ -119,15 +100,30 @@ class Home extends Component {
   };
 
   render() {
-    return <div>{!this.state.loading?this.renderData():<div>wait</div>}</div>
+    return (
+      <div>
+        {!this.props.loading ? this.renderData() : <Spin/>}
+        <Modal
+          title={this.props.vacancy.name}
+          visible={this.props.showModal}
+          closable={false}
+          footer={<Button onClick={this.closeModal}>Закрыть</Button>}
+        >
+          {this.props.vacancy.name && <DetailedVacancy vacancy={this.props.vacancy}/>}
+        </Modal>
+      </div>
+    )
   };
 }
 
 function mapStateToProps(state) {
   return {
     mainData: state.mainDataReducer.data,
+    loading: state.mainDataReducer.loading,
     areas: state.areasReducer.areas,
+    filters: state.areasReducer.filters,
     vacancy: state.vacancyReducer.data,
+    showModal: state.vacancyReducer.showModal
   };
 }
 
