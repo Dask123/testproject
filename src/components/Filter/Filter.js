@@ -2,8 +2,8 @@
  * Created by Пользователь on 28.10.2017.
  */
 import React, { Component } from 'react';
-import {Select, Button} from 'antd';
-const Option = Select.Option;
+import {Select} from 'antd';
+const {Option} = Select;
 
 const dict = {
   countries: "страну",
@@ -20,7 +20,7 @@ const Filter = ({ items, onFilterChange, type }) => {
         onChange={onFilterChange}
       >
         {
-          items.map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
+          (items || []).map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
         }
       </Select>
     </div>

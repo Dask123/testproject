@@ -20,8 +20,8 @@ function* getByIdHandler(action) {
           cities.push(area);
         }
       });
-      yield put(areasActionsHandlers.getCitiesSucceeded(cities));
       yield put(areasActionsHandlers.getZonesSucceeded(zones));
+      yield put(areasActionsHandlers.getCitiesSucceeded(cities));
     }
   } catch (e) {
     yield put(areasActionsHandlers.getByIdFailed(e.message));

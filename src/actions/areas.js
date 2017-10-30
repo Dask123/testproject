@@ -4,7 +4,8 @@
 import { createAction } from 'redux-act';
 
 export const areasActions = {
-  getById: createAction('get area by id')
+  getById: createAction('get area by id'),
+  clearFilter: createAction('clear filter')
 };
 
 export const areasActionsHandlers = {

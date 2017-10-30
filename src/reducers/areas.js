@@ -21,8 +21,6 @@ export const areasReducer = createReducer({
       filters.push('countries');
     }
     nextState.areas.countries = payload;
-    /*nextState.areas.zones = [];
-    nextState.areas.cities = [];*/
     nextState.filters = filters;
     return nextState
   },
@@ -53,5 +51,20 @@ export const areasReducer = createReducer({
       nextState.filters = filters;
     }
     return nextState
+  },
+  [areasActionsHandlers.clearFilter]: (state, payload) => {
+    nextState = {...state};
+    switch (payload){
+      case 'countries':
+        nextState.areas.zones = [];
+        nextState.areas.cities = [];
+        return nextState;
+      case 'zones':
+        nextState.areas.cities = [];
+        return nextState;
+      case 'cities':
+        return nextState;
+      default: return nextState;
+    }
   }
 }, initialState);

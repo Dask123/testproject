@@ -26,5 +26,5 @@ function* getFilteredDataHandler(action) {
   }
 }
 export function* watchGetFilteredData() {
-  yield takeLatest(mainDataActionsHandlers.getFilteredData, getFilteredDataHandler);
+  yield takeLatest(mainDataActions.getFilteredData, getFilteredDataHandler);
 }

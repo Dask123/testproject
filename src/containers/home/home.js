@@ -22,12 +22,14 @@ class Home extends Component {
     super(props);
     this.state = {
       showFilterBlock: false,
-      showModal: false
+      showModal: false,
+      filterId: null
     };
     this.renderData = this.renderData.bind(this);
     this.showDetailed = this.showDetailed.bind(this);
     this.showFilters = this.showFilters.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
+    this.setFilter = this.setFilter.bind(this);
   }
 
   componentWillMount(){
@@ -43,11 +45,21 @@ class Home extends Component {
     vacancyActions.getVacancy(id);
   };
 
-  onFilterChange(id){
-    areasActions.getById(id);
-    this.setState({
-      filterId: id
-    });
+  onFilterChange(type){
+    return (id)=>{
+      if(type !== 'cities'){
+        areasActions.getById(id);
+      }
+      if(type !== 'cities'){
+        areasActions.clearFilter('cities');
+      }else if(type === 'countries'){
+        areasActions.clearFilter('zones');
+        areasActions.clearFilter('cities');
+      }
+      this.setState({
+        filterId: id
+      });
+    }
   };
 
   showFilters(){
@@ -57,14 +69,17 @@ class Home extends Component {
   };
 
   setFilter(){
-    mainDataActions.getFilteredData(this.state.id);
+    mainDataActions.getFilteredData(this.state.filterId);
+    areasActions.clearFilter('zones');
+    areasActions.clearFilter('cities');
   };
 
   renderData(){
     const {mainData: vacancies, areas, filters} = this.props;
     let userFilters = Object.keys(areas).map(area=> {
-      if (filters.includes(area) && areas[area].length) {
-        return <Filter items={areas[area]} key={area} onFilterChange={this.onFilterChange} type={area}/>
+      if (filters.includes(area)) {
+        console.log('render', area)
+        return <Filter items={areas[area]} key={area} onFilterChange={this.onFilterChange(area)} type={area}/>
       }
     });
     return (
