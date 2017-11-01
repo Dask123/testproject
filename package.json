@@ -4,8 +4,8 @@
   "description": "test project",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server",
-    "build": "webpack"
+    "dev": "set BUILD_MODE=dev && set NODE_ENV=development && webpack-dev-server",
+    "build": "set BUILD_MODE=build && set NODE_ENV=production && webpack"
   },
   "repository": {
     "type": "git",
