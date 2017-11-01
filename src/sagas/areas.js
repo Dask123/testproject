@@ -7,23 +7,10 @@ import {areasActions, areasActionsHandlers} from "../actions/areas";
 
 function* getByIdHandler(action) {
   try {
-    const cities = [];
-    const zones = [];
     const response = yield call(getAreas, action.payload);
-    if (Array.isArray(response.data)){
-      yield put(areasActionsHandlers.getCountriesSucceeded(response.data));
-    }else if(Array.isArray(response.data.areas)){
-      response.data.areas.forEach(area=>{
-        if(area.areas.length){
-          zones.push(area);
-        }else{
-          cities.push(area);
-        }
-      });
-      yield put(areasActionsHandlers.getZonesSucceeded(zones));
-      yield put(areasActionsHandlers.getCitiesSucceeded(cities));
+    yield put(areasActionsHandlers.getAreasSucceeded(response.data.areas))
     }
-  } catch (e) {
+    catch (e) {
     yield put(areasActionsHandlers.getByIdFailed(e.message));
 }
 }

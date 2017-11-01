@@ -34,7 +34,7 @@ class Home extends Component {
 
   componentWillMount(){
     mainDataActions.getMainData(moment().format(dateTimeFormat));
-    areasActions.getById();
+    areasActions.getById(113);
   }
 
   closeModal(){
@@ -45,21 +45,10 @@ class Home extends Component {
     vacancyActions.getVacancy(id);
   };
 
-  onFilterChange(type){
-    return (id)=>{
-      if(type !== 'cities'){
-        areasActions.getById(id);
-      }
-      if(type !== 'cities'){
-        areasActions.clearFilter('cities');
-      }else if(type === 'countries'){
-        areasActions.clearFilter('zones');
-        areasActions.clearFilter('cities');
-      }
+  onFilterChange(id){
       this.setState({
         filterId: id
       });
-    }
   };
 
   showFilters(){
@@ -70,18 +59,10 @@ class Home extends Component {
 
   setFilter(){
     mainDataActions.getFilteredData(this.state.filterId);
-    areasActions.clearFilter('zones');
-    areasActions.clearFilter('cities');
   };
 
   renderData(){
-    const {mainData: vacancies, areas, filters} = this.props;
-    let userFilters = Object.keys(areas).map(area=> {
-      if (filters.includes(area)) {
-        console.log('render', area)
-        return <Filter items={areas[area]} key={area} onFilterChange={this.onFilterChange(area)} type={area}/>
-      }
-    });
+    const {mainData: vacancies, areas} = this.props;
     return (
       <Layout className="layout">
         <Header/>
@@ -94,7 +75,7 @@ class Home extends Component {
             {
               this.state.showFilters &&
               <div className="filter-block">
-                {userFilters}
+                <Filter items={areas} onFilterChange={this.onFilterChange}/>
                 <Button type="primary" onClick={this.setFilter}>Применить</Button>
               </div>
             }
@@ -136,7 +117,6 @@ function mapStateToProps(state) {
     mainData: state.mainDataReducer.data,
     loading: state.mainDataReducer.loading,
     areas: state.areasReducer.areas,
-    filters: state.areasReducer.filters,
     vacancy: state.vacancyReducer.data,
     showModal: state.vacancyReducer.showModal
   };

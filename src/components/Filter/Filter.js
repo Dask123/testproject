@@ -5,18 +5,12 @@ import React, { Component } from 'react';
 import {Select} from 'antd';
 const {Option} = Select;
 
-const dict = {
-  countries: "страну",
-  zones: "область",
-  cities: "город"
-}
-
-const Filter = ({ items, onFilterChange, type }) => {
+const Filter = ({ items, onFilterChange }) => {
   return (
     <div className="filter">
       <Select
         style={{width: '100%'}}
-        placeholder={`Выберите ${dict[type]}`}
+        placeholder={`Выберите область`}
         onChange={onFilterChange}
       >
         {
