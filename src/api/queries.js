@@ -16,11 +16,10 @@ export function getAreas(area) {
   return api.http.get(`${headHunter}areas/${area?area:''}`);
 }
 
-export function getFilteredDataById(id) {
+export function getFilteredData(params) {
+  params.only_with_salary = true;
   return api.http.get(`${headHunter}vacancies/`,{
-    params: {
-      area: id
-    }
+    params
   });
 }
 

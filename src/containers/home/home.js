@@ -22,14 +22,15 @@ class Home extends Component {
     super(props);
     this.state = {
       showFilterBlock: false,
-      showModal: false,
-      filterId: null
+      showModal: false
     };
+    this.filterParams = {};
     this.renderData = this.renderData.bind(this);
     this.showDetailed = this.showDetailed.bind(this);
     this.showFilters = this.showFilters.bind(this);
     this.onFilterChange = this.onFilterChange.bind(this);
-    this.setFilter = this.setFilter.bind(this);
+    this.onSalaryFilterChange = this.onSalaryFilterChange.bind(this);
+    this.getFilteredData = this.getFilteredData.bind(this);
   }
 
   componentWillMount(){
@@ -45,21 +46,28 @@ class Home extends Component {
     vacancyActions.getVacancy(id);
   };
 
+  getFilteredData(){
+    mainDataActions.getFilteredData(this.filterParams);
+  }
+
   onFilterChange(id){
-      this.setState({
-        filterId: id
-      });
+    this.filterParams.area = id;
+    this.getFilteredData();
   };
+
+  onSalaryFilterChange(salary){
+    console.log('FIRED', salary)
+    this.filterParams.salary = salary;
+    this.getFilteredData();
+  }
 
   showFilters(){
     this.setState({
       showFilters: !this.state.showFilters
-    })
+    });
+    this.filterParams = {};
   };
 
-  setFilter(){
-    mainDataActions.getFilteredData(this.state.filterId);
-  };
 
   renderData(){
     const {mainData: vacancies, areas} = this.props;
@@ -75,8 +83,7 @@ class Home extends Component {
             {
               this.state.showFilters &&
               <div className="filter-block">
-                <Filter items={areas} onFilterChange={this.onFilterChange}/>
-                <Button type="primary" onClick={this.setFilter}>Применить</Button>
+                <Filter items={areas} onFilterChange={this.onFilterChange} onSalaryFilterChange={this.onSalaryFilterChange}/>
               </div>
             }
           <div className="data-wrapper">

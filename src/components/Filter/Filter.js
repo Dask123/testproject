@@ -2,22 +2,58 @@
  * Created by Пользователь on 28.10.2017.
  */
 import React, { Component } from 'react';
-import {Select} from 'antd';
+import {Select, Slider, InputNumber} from 'antd';
 const {Option} = Select;
+import './Filter.less';
 
-const Filter = ({ items, onFilterChange }) => {
-  return (
-    <div className="filter">
-      <Select
-        style={{width: '100%'}}
-        placeholder={`Выберите область`}
-        onChange={onFilterChange}
-      >
-        {
-          (items || []).map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
-        }
-      </Select>
-    </div>
-  )
-};
-export default Filter;
+export default class Filter extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      value: 0
+    };
+    this.onSalaryFilterChange = this.onSalaryFilterChange.bind(this);
+  }
+
+
+  onSalaryFilterChange(value){
+    this.setState({
+      value
+    });
+    this.props.onSalaryFilterChange(value);
+  }
+
+  render(){
+    const {items, onFilterChange, onSalaryFilterChange} = this.props;
+    return (
+      <div className="filter">
+        <label>Фильтр по региону</label>
+        <Select
+          style={{width: '100%'}}
+          placeholder={`Выберите область`}
+          onChange={onFilterChange}
+        >
+          {
+            (items || []).map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
+          }
+        </Select>
+        <label>Фильтр по заработной плате</label>
+        <div className="filter__salary">
+          <Slider
+            className="slider"
+            onChange={this.onSalaryFilterChange}
+            step={5000}
+            max={500000}
+            value={this.state.value}
+          />
+          <InputNumber
+            step={5000}
+            max={500000}
+            onChange={this.onSalaryFilterChange}
+            value={this.state.value}
+          />
+        </div>
+      </div>
+    )
+  }
+}
