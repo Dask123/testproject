@@ -6,6 +6,7 @@ import {vacancyActionsHandlers, vacancyActions}  from '../actions/vacancy';
 
 const initialState = {
   data: {},
+  searchFields:{},
   showModal: false
 };
 export const vacancyReducer = createReducer({
@@ -18,5 +19,5 @@ export const vacancyReducer = createReducer({
   },
   [vacancyActions.clearVacancy]: (state) => {
     return {...state, data: {}, showModal: false}
-  }
+  },
 }, initialState);

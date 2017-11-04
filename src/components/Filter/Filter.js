@@ -2,8 +2,9 @@
  * Created by Пользователь on 28.10.2017.
  */
 import React, { Component } from 'react';
-import {Select, Slider, InputNumber} from 'antd';
+import {Select, Slider, InputNumber, Input} from 'antd';
 const {Option} = Select;
+const {Search} = Input;
 import './Filter.less';
 
 export default class Filter extends Component {
@@ -24,7 +25,7 @@ export default class Filter extends Component {
   }
 
   render(){
-    const {items, onFilterChange, onSalaryFilterChange} = this.props;
+    const {items, onFilterChange, textFieldChange} = this.props;
     return (
       <div className="filter">
         <label>Фильтр по региону</label>
@@ -53,6 +54,7 @@ export default class Filter extends Component {
             value={this.state.value}
           />
         </div>
+        <Search placeholder="Ключевые слова" onSearch={textFieldChange} />
       </div>
     )
   }

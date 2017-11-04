@@ -10,7 +10,7 @@ export const vacancyActions = {
 
 export const vacancyActionsHandlers = {
   getVacancySucceeded: createAction('successful response'),
-  getVacancyFailed: createAction('failed response')
+  getVacancyFailed: createAction('failed response'),
 };
 
 export default vacancyActions;

@@ -31,9 +31,10 @@ class Home extends Component {
     this.onFilterChange = this.onFilterChange.bind(this);
     this.onSalaryFilterChange = this.onSalaryFilterChange.bind(this);
     this.getFilteredData = this.getFilteredData.bind(this);
+    this.textFieldChange = this.textFieldChange.bind(this);
   }
 
-  componentWillMount(){
+  componentDidMount(){
     mainDataActions.getMainData(moment().format(dateTimeFormat));
     areasActions.getById(113);
   }
@@ -56,10 +57,14 @@ class Home extends Component {
   };
 
   onSalaryFilterChange(salary){
-    console.log('FIRED', salary)
     this.filterParams.salary = salary;
     this.getFilteredData();
-  }
+  };
+
+  textFieldChange(text){
+    this.filterParams.text = text;
+    this.getFilteredData();
+  };
 
   showFilters(){
     this.setState({
@@ -83,7 +88,12 @@ class Home extends Component {
             {
               this.state.showFilters &&
               <div className="filter-block">
-                <Filter items={areas} onFilterChange={this.onFilterChange} onSalaryFilterChange={this.onSalaryFilterChange}/>
+                <Filter
+                  items={areas}
+                  onFilterChange={this.onFilterChange}
+                  onSalaryFilterChange={this.onSalaryFilterChange}
+                  textFieldChange={this.textFieldChange}
+                />
               </div>
             }
           <div className="data-wrapper">

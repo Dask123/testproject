@@ -2,7 +2,7 @@
  * Created by Пользователь on 22.10.2017.
  */
 import { call, put, takeLatest } from "redux-saga/effects";
-import { getVacancy } from "../api/queries";
+import { getVacancy, getVacancySearchFields } from "../api/queries";
 import {vacancyActions, vacancyActionsHandlers} from "../actions/vacancy";
 
 function* getVacancyHandler(action) {
@@ -16,3 +16,4 @@ function* getVacancyHandler(action) {
 export function* watchGetVacancy() {
   yield takeLatest(vacancyActions.getVacancy, getVacancyHandler);
 }
+

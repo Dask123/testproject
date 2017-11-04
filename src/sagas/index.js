@@ -12,6 +12,6 @@ export default function* rootSaga() {
     areasSagas.watchGetByIdHandler(),
     mainDataSagas.watchGetMainData(),
     mainDataSagas.watchGetFilteredData(),
-    vacancySagas.watchGetVacancy()
+    vacancySagas.watchGetVacancy(),
   ]);
 }

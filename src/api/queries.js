@@ -26,3 +26,4 @@ export function getFilteredData(params) {
 export function getVacancy(id) {
   return api.http.get(`${headHunter}vacancies/${id}`);
 }
+
