@@ -2,27 +2,41 @@
  * Created by Пользователь on 25.10.2017.
  */
 import React from 'react';
-import { Card } from "antd"
+import { Button } from "antd"
+import {parseSalary} from '../../helpers/helper';
 import './BasicVacancy.less';
 
 export const BasicVacancy = ({vacancy, showDetailed}) => {
     return (
-        <Card title={vacancy.name} extra={<a onClick={()=>{showDetailed(vacancy.id)}}>Подробнее</a>}>
-          <div className="vacancy-wrapper">
-            <label>Требования: </label>
-            <span className="vacancy-requirment">{vacancy.snippet.requirement}</span>
-            <label>Обязанности: </label>
-            <span className="vacancy-responsibility">
-              <span dangerouslySetInnerHTML={(() => {return {__html: vacancy.snippet.responsibility?vacancy.snippet.responsibility:'Не указано'}})()}/>
-            </span>
-            <label>Заработная плата: </label>
-            <span className="vacancy-salary">
-            {vacancy.salary?vacancy.salary.from?`от ${vacancy.salary.from} рублей`:"Договорная":"Договорная"}
-            </span>
-            <label>Компания: </label>
-            <span className="vacancy-company">{`${vacancy.employer.name}, ${vacancy.area.name}`}</span>
+          <div className="vacancy">
+            <div className="vacancy-header">
+              <div className="vacancy-header__title">
+                <h2>{vacancy.name}</h2>
+              </div>
+              <div className="vacancy-header__salary">
+                <h3>{parseSalary(vacancy.salary)}</h3>
+              </div>
+            </div>
+            <div className="vacancy-content">
+              <div className="vacancy-content__requirment">
+                <label>Требования: </label>
+                {vacancy.snippet.requirement}
+              </div>
+              <div className="vacancy-content__responsibility">
+                <label>Обязанности: </label>
+                <span dangerouslySetInnerHTML={(() => {return {__html: vacancy.snippet.responsibility?vacancy.snippet.responsibility:'Не указано'}})()}/>
+              </div>
+              <div className="vacancy-content__company">
+                <div className="company-wrap">
+                  <label>Компания: </label>
+                  {`${vacancy.employer.name}, ${vacancy.area.name}`}
+                </div>
+                <Button onClick={()=>{showDetailed(vacancy.id)}}>
+                  Подробнее
+                </Button>
+              </div>
+            </div>
           </div>
-        </Card>
     )
 };
 export default BasicVacancy;

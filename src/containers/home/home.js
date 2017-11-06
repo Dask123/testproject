@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import moment from 'moment';
-import { Layout, Modal, Button, Spin } from 'antd';
+import { Icon, Modal, Button, Spin } from 'antd';
 import './home.less';
 import BasicVacancy from '../../components/BasicVacancy/BasicVacancy';
 import DetailedVacancy from '../../components/DetailedVacancy/DetailedVacancy';
@@ -14,7 +14,6 @@ import {vacancyActions} from "../../actions/vacancy";
 import {areasActions} from "../../actions/areas";
 
 const dateTimeFormat = 'YYYY-MM-DD';
-const {Header, Footer, Content} = Layout;
 
 class Home extends Component {
 
@@ -77,38 +76,36 @@ class Home extends Component {
   renderData(){
     const {mainData: vacancies, areas} = this.props;
     return (
-      <Layout className="layout">
-        <Header/>
-        <Content style={{ padding: '0 50px' }}>
-          <div className="filters-button">
-            <Button type="primary" onClick={this.showFilters}>
-              Фильтры
-            </Button>
+    <div className="app">
+      <div className="app-header">
+        <div className="filters-button">
+          <Button style={{background:"#7496b9", border:"#7496b9"}} onClick={this.showFilters}>
+            <Icon style={{color: "white", fontSize: "20px"}} type={this.state.showFilters ? "menu-fold" : "menu-unfold"} />
+          </Button>
+        </div>
+        {
+          this.state.showFilters &&
+          <div className="filter-block">
+            <Filter
+              items={areas}
+              onFilterChange={this.onFilterChange}
+              onSalaryFilterChange={this.onSalaryFilterChange}
+              textFieldChange={this.textFieldChange}
+            />
           </div>
-            {
-              this.state.showFilters &&
-              <div className="filter-block">
-                <Filter
-                  items={areas}
-                  onFilterChange={this.onFilterChange}
-                  onSalaryFilterChange={this.onSalaryFilterChange}
-                  textFieldChange={this.textFieldChange}
-                />
-              </div>
-            }
-          <div className="data-wrapper">
-            {
-              vacancies.map((vacancy, index)=>(
-                <div key={index} className="card-wrap">
-                  <BasicVacancy vacancy={vacancy} showDetailed={this.showDetailed}/>
-                </div>
-              ))
-            }
-          </div>
-        </Content>
-        <Footer style={{ textAlign: 'center' }}>
-        </Footer>
-      </Layout>
+        }
+      </div>
+      <div className="app-content">
+
+        <div className="app-content__data">
+          {
+            vacancies.map((vacancy, index)=>(
+                <BasicVacancy key={index} vacancy={vacancy} showDetailed={this.showDetailed}/>
+            ))
+          }
+        </div>
+      </div>
+    </div>
     );
   };
 

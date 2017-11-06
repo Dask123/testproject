@@ -28,33 +28,40 @@ export default class Filter extends Component {
     const {items, onFilterChange, textFieldChange} = this.props;
     return (
       <div className="filter">
-        <label>Фильтр по региону</label>
-        <Select
-          style={{width: '100%'}}
-          placeholder={`Выберите область`}
-          onChange={onFilterChange}
-        >
-          {
-            (items || []).map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
-          }
-        </Select>
-        <label>Фильтр по заработной плате</label>
-        <div className="filter__salary">
-          <Slider
-            className="slider"
-            onChange={this.onSalaryFilterChange}
-            step={5000}
-            max={500000}
-            value={this.state.value}
-          />
-          <InputNumber
-            step={5000}
-            max={500000}
-            onChange={this.onSalaryFilterChange}
-            value={this.state.value}
-          />
+        <div style={{width: "33%"}}>
+          <label>Фильтр по региону</label>
+          <Select
+            style={{width: '100%'}}
+            placeholder={`Выберите область`}
+            onChange={onFilterChange}
+          >
+            {
+              (items || []).map(item => <Option key={item.id} value={item.id}>{item.name}</Option>)
+            }
+          </Select>
         </div>
-        <Search placeholder="Ключевые слова" onSearch={textFieldChange} />
+        <div style={{width: "33%"}}>
+          <label>Фильтр по заработной плате</label>
+          <div className="filter__salary">
+            <Slider
+              className="slider"
+              onChange={this.onSalaryFilterChange}
+              step={5000}
+              max={500000}
+              value={this.state.value}
+            />
+            <InputNumber
+              step={5000}
+              max={500000}
+              onChange={this.onSalaryFilterChange}
+              value={this.state.value}
+            />
+          </div>
+        </div>
+        <div style={{width: "30%"}}>
+          <label>Текстовый фильтр</label>
+          <Search placeholder="Ключевые слова" onSearch={textFieldChange} />
+        </div>
       </div>
     )
   }

@@ -1,4 +1,45 @@
-.vacancy-wrapper{
+.vacancy{
+  font-family: "Roboto";
+  font-size: 12px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  background: white;
+  border-radius: 5px;
+  padding: 5px;
+  height: 270px;
+  min-width: 300px;
+  max-width: 300px;
+  margin: 0 10px 10px 0;
+  label{
+    font: bold 100% serif;
+  }
+
+  &-header{
+    border-bottom: solid 1px #ddd;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    &__title{
+      padding: 5px;
+    }
+    &__salary{
+      h3{
+        color: #525252;
+      }
+      padding: 5px;
+      margin-bottom: 5px;
+    }
+  }
+  &-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 210px;
+    &__company{
+      display: flex;
+      justify-content: space-between;
+      padding: 0 5px 5px 0;
+    }
+  }
 }

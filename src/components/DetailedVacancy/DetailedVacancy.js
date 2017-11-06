@@ -2,23 +2,8 @@
  * Created by Пользователь on 26.10.2017.
  */
 import React, { Component } from 'react';
+import {parseSalary} from '../../helpers/helper';
 import moment from 'moment';
-
-const unsettedSalary = "Договорная";
-
-function parseSalary(salary){
-  let result;
-  if(salary.from && salary.to){
-    result = `от ${salary.from} до ${salary.to} рублей`
-  }else if(salary.from && !salary.to){
-    result = `от ${salary.from} рублей`
-  }else if(salary.to && !salary.from){
-    result = `до ${salary.to} рублей`
-  }else{
-    result = unsettedSalary;
-  }
-  return result;
-}
 
 const DetailedVacancy = ({vacancy}) => {
     return (
