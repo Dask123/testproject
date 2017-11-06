@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Button } from "antd"
-import {parseSalary} from '../../helpers/helper';
+import {parseSalary, subStr} from '../../helpers/helper';
 import './BasicVacancy.less';
 
 export const BasicVacancy = ({vacancy, showDetailed}) => {
@@ -20,21 +20,23 @@ export const BasicVacancy = ({vacancy, showDetailed}) => {
             <div className="vacancy-content">
               <div className="vacancy-content__requirment">
                 <label>Требования: </label>
-                {vacancy.snippet.requirement}
+                {subStr(vacancy.snippet.requirement)}
               </div>
               <div className="vacancy-content__responsibility">
                 <label>Обязанности: </label>
-                <span dangerouslySetInnerHTML={(() => {return {__html: vacancy.snippet.responsibility?vacancy.snippet.responsibility:'Не указано'}})()}/>
+                <span dangerouslySetInnerHTML={(() => {return {__html: vacancy.snippet.responsibility ? vacancy.snippet.responsibility:'Не указано'}})()}/>
               </div>
               <div className="vacancy-content__company">
                 <div className="company-wrap">
                   <label>Компания: </label>
                   {`${vacancy.employer.name}, ${vacancy.area.name}`}
                 </div>
-                <Button onClick={()=>{showDetailed(vacancy.id)}}>
-                  Подробнее
-                </Button>
               </div>
+            </div>
+            <div className="vacancy-btn">
+              <Button onClick={()=>{showDetailed(vacancy.id)}}>
+                Подробнее
+              </Button>
             </div>
           </div>
     )

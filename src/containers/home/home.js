@@ -20,7 +20,7 @@ class Home extends Component {
   constructor(props){
     super(props);
     this.state = {
-      showFilterBlock: false,
+      showFilters: false,
       showModal: false
     };
     this.filterParams = {};
@@ -36,6 +36,12 @@ class Home extends Component {
   componentDidMount(){
     mainDataActions.getMainData(moment().format(dateTimeFormat));
     areasActions.getById(113);
+  }
+
+  componentWillUpdate(nextProps, nextState){
+    if(!nextState.showFilters && this.filterParams){
+      mainDataActions.getMainData(moment().format(dateTimeFormat));
+    }
   }
 
   closeModal(){
