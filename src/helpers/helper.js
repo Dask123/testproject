@@ -20,10 +20,3 @@ export function parseSalary(salary){
   }
   return result;
 }
-
-export function subStr(string) {
-  if(string && string.length > 95){
-    string = `${string.substr(0, 95)}...`;
-  }
-  return string
-}

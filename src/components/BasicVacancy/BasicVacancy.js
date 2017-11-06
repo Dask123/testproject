@@ -3,7 +3,7 @@
  */
 import React from 'react';
 import { Button } from "antd"
-import {parseSalary, subStr} from '../../helpers/helper';
+import {parseSalary} from '../../helpers/helper';
 import './BasicVacancy.less';
 
 export const BasicVacancy = ({vacancy, showDetailed}) => {
@@ -20,7 +20,7 @@ export const BasicVacancy = ({vacancy, showDetailed}) => {
             <div className="vacancy-content">
               <div className="vacancy-content__requirment">
                 <label>Требования: </label>
-                {subStr(vacancy.snippet.requirement)}
+                {vacancy.snippet.requirement}
               </div>
               <div className="vacancy-content__responsibility">
                 <label>Обязанности: </label>
