@@ -28,7 +28,8 @@ const prodPlugins = [
   }),
   new ExtractTextPlugin({
       filename: 'style.css',
-      disable: inDevMode
+      disable: inDevMode,
+      allChunks: true
     }
   ),
   new webpack.DefinePlugin({
@@ -39,7 +40,7 @@ const prodPlugins = [
   }),
 ];
 
-!inDevMode ? plugins = prodPlugins : plugins = plugins.concat(prodPlugins, devPlugins);
+plugins = !inDevMode ? prodPlugins : plugins.concat(prodPlugins, devPlugins);
 
 module.exports = {
   devtool: inDevMode && 'cheap-module-eval-source-map',
@@ -48,27 +49,15 @@ module.exports = {
   },
   output: {
     path: __dirname + (inDevMode ? "/" : "/public/"),
+    publicPath: inDevMode ? "/" : "../public/",
     filename: 'bundle.js'
   },
   plugins: plugins,
   module: {
-    loaders: [
-      {
-        test: /.jsx?$/,
-        loaders: ['react-hot', 'babel-loader'],
-        exclude: /node_modules/
-      }
-    ],
     rules: [
       {
         test: /\.less$/,
-        use: [{
-          loader: "style-loader"
-        },{
-          loader: "css-loader"
-        },{
-          loader: "less-loader"
-        }]
+          use: ['style-loader', 'css-loader', 'less-loader']
       },
       {
         test: /\.css$/,
@@ -87,7 +76,7 @@ module.exports = {
   },
   devServer: {
     host: 'localhost',
-    port: 9090
-}
+    port: 1010
+  }
 };
 
