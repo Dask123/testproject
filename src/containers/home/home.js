@@ -39,7 +39,7 @@ class Home extends Component {
   }
 
   componentWillUpdate(nextProps, nextState){
-    if(!nextState.showFilters && this.filterParams){
+    if(!nextState.showFilters && this.state.showFilters){
       mainDataActions.getMainData(moment().format(dateTimeFormat));
     }
   }

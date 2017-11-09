@@ -20,6 +20,7 @@
     "antd": "^2.13.7",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-polyfill": "^6.26.0",
+    "jest": "^21.2.1",
     "moment": "^2.19.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
