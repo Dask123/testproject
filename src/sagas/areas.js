@@ -5,7 +5,7 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import { getAreas } from "../api/queries";
 import {areasActions, areasActionsHandlers} from "../actions/areas";
 
-function* getByIdHandler(action) {
+export function* getByIdHandler(action) {
   try {
     const response = yield call(getAreas, action.payload);
     yield put(areasActionsHandlers.getAreasSucceeded(response.data.areas))
