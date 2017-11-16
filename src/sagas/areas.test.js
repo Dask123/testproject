@@ -13,9 +13,9 @@ test('Тестеирование метода получения областе�
             areas: []
         }
     };
-    /*let error = new Error;*/
+    let error = new Error;
 
     expect(saga.next(response).value).toEqual(put(areasActionsHandlers.getAreasSucceeded([])));
 
-    /*expect(saga.next(error).value).toEqual(put(areasActionsHandlers.getByIdFailed(error)));*/
+    expect(saga.throw(error).value).toEqual(put(areasActionsHandlers.getByIdFailed(error.message)));
 });
